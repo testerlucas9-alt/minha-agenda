@@ -1,1267 +1,430 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Meu Sistema</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Meu Sistema</title>
 
-<style>
-*{
-  box-sizing:border-box;
-  margin:0;
-  padding:0;
-  font-family:Arial,Helvetica,sans-serif;
-}
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f1f5f9;
+      color: #1e293b;
+    }
 
-body{
-  background:#f4f6fb;
-  color:#1e293b;
-}
+    header {
+      background: #0f172a;
+      color: white;
+      padding: 20px;
+      text-align: center;
+    }
 
-.sidebar{
-  width:240px;
-  height:100vh;
-  position:fixed;
-  background:#111827;
-  color:white;
-  padding:25px 15px;
-}
+    nav {
+      background: #1e293b;
+      padding: 10px;
+      text-align: center;
+    }
 
-.logo{
-  font-size:24px;
-  font-weight:bold;
-  margin-bottom:30px;
-  padding:10px;
-}
+    nav button {
+      padding: 10px 20px;
+      margin: 5px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
 
-.logo span{
-  color:#60a5fa;
-}
+    main {
+      max-width: 1000px;
+      margin: 30px auto;
+      padding: 20px;
+    }
 
-.menu button{
-  width:100%;
-  text-align:left;
-  border:0;
-  background:none;
-  color:#cbd5e1;
-  padding:14px;
-  border-radius:9px;
-  margin-bottom:5px;
-  cursor:pointer;
-  font-size:15px;
-}
+    .pagina {
+      display: none;
+    }
 
-.menu button:hover,
-.menu button.active{
-  background:#1f2937;
-  color:white;
-}
+    .pagina.ativa {
+      display: block;
+    }
 
-.main{
-  margin-left:240px;
-  padding:30px;
-}
+    .card {
+      background: white;
+      padding: 20px;
+      border-radius: 12px;
+      margin-bottom: 20px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+    }
 
-.header{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  margin-bottom:30px;
-}
+    input, select {
+      padding: 10px;
+      margin: 5px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+    }
 
-.header p{
-  color:#64748b;
-  margin-top:5px;
-}
+    .botao {
+      background: #2563eb;
+      color: white;
+      padding: 10px 15px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
 
-.clock{
-  background:white;
-  padding:12px 18px;
-  border-radius:12px;
-  box-shadow:0 5px 18px rgba(0,0,0,.06);
-}
+    .excluir {
+      background: #dc2626;
+    }
 
-.page{
-  display:none;
-}
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 15px;
+    }
 
-.page.active{
-  display:block;
-}
+    th, td {
+      padding: 12px;
+      border-bottom: 1px solid #ddd;
+      text-align: left;
+    }
 
-.cards{
-  display:grid;
-  grid-template-columns:repeat(4,1fr);
-  gap:18px;
-  margin-bottom:25px;
-}
+    th {
+      background: #e2e8f0;
+    }
 
-.card{
-  background:white;
-  padding:22px;
-  border-radius:16px;
-  box-shadow:0 8px 25px rgba(0,0,0,.05);
-}
+    .dashboard {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
 
-.card small{
-  color:#64748b;
-}
-
-.card h2{
-  margin-top:10px;
-}
-
-.box{
-  background:white;
-  border-radius:16px;
-  padding:22px;
-  margin-bottom:20px;
-  box-shadow:0 8px 25px rgba(0,0,0,.05);
-}
-
-.box h2{
-  margin-bottom:18px;
-}
-
-.form-grid{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:12px;
-}
-
-input,select,textarea{
-  width:100%;
-  border:1px solid #dbe2ea;
-  padding:12px;
-  border-radius:8px;
-  outline:none;
-}
-
-textarea{
-  resize:vertical;
-  min-height:100px;
-}
-
-.btn{
-  background:#2563eb;
-  color:white;
-  border:0;
-  padding:11px 17px;
-  border-radius:8px;
-  cursor:pointer;
-}
-
-.btn:hover{
-  opacity:.9;
-}
-
-.btn-danger{
-  background:#dc2626;
-}
-
-.btn-green{
-  background:#16a34a;
-}
-
-table{
-  width:100%;
-  border-collapse:collapse;
-}
-
-th{
-  text-align:left;
-  background:#f1f5f9;
-  padding:12px;
-}
-
-td{
-  padding:12px;
-  border-bottom:1px solid #e5e7eb;
-}
-
-.badge{
-  background:#dcfce7;
-  color:#15803d;
-  border-radius:20px;
-  padding:5px 9px;
-  font-size:12px;
-}
-
-.search{
-  margin-bottom:15px;
-}
-
-.flex{
-  display:flex;
-  gap:10px;
-  align-items:center;
-}
-
-.note{
-  background:#fff7cc;
-  padding:15px;
-  margin-bottom:10px;
-  border-radius:10px;
-}
-
-.empty{
-  color:#94a3b8;
-  padding:15px 0;
-}
-
-@media(max-width:900px){
-  .sidebar{
-    width:70px;
-  }
-
-  .sidebar .logo span,
-  .sidebar .logo-text,
-  .menu button span{
-    display:none;
-  }
-
-  .main{
-    margin-left:70px;
-  }
-
-  .cards{
-    grid-template-columns:repeat(2,1fr);
-  }
-
-  .form-grid{
-    grid-template-columns:1fr;
-  }
-}
-
-@media(max-width:600px){
-  .cards{
-    grid-template-columns:1fr;
-  }
-
-  .main{
-    padding:15px;
-  }
-}
-</style>
+    .numero {
+      font-size: 30px;
+      font-weight: bold;
+      color: #2563eb;
+    }
+  </style>
 </head>
 
 <body>
 
-<div class="sidebar">
+<header>
+  <h1>🚀 Meu Sistema</h1>
+  <p>Primeiro sistema web</p>
+</header>
 
-  <div class="logo">
-    ⚡ <span class="logo-text">Meu</span><span>Sistema</span>
-  </div>
+<nav>
+  <button onclick="abrirPagina('inicio')">Dashboard</button>
+  <button onclick="abrirPagina('tarefas')">Tarefas</button>
+  <button onclick="abrirPagina('clientes')">Clientes</button>
+</nav>
 
-  <div class="menu">
+<main>
 
-    <button class="active" onclick="abrirPagina('dashboard',this)">
-      🏠 <span>Dashboard</span>
-    </button>
+  <!-- DASHBOARD -->
 
-    <button onclick="abrirPagina('agenda',this)">
-      📅 <span>Agenda</span>
-    </button>
+  <section id="inicio" class="pagina ativa">
 
-    <button onclick="abrirPagina('tarefas',this)">
-      ✅ <span>Tarefas</span>
-    </button>
+    <h2>Dashboard</h2>
 
-    <button onclick="abrirPagina('financeiro',this)">
-      💰 <span>Financeiro</span>
-    </button>
+    <div class="dashboard">
 
-    <button onclick="abrirPagina('clientes',this)">
-      👥 <span>Clientes</span>
-    </button>
+      <div class="card">
+        <p>Tarefas cadastradas</p>
+        <div id="totalTarefas" class="numero">0</div>
+      </div>
 
-    <button onclick="abrirPagina('notas',this)">
-      📝 <span>Anotações</span>
-    </button>
+      <div class="card">
+        <p>Clientes cadastrados</p>
+        <div id="totalClientes" class="numero">0</div>
+      </div>
 
-  </div>
+      <div class="card">
+        <p>Status</p>
+        <div class="numero">Online</div>
+      </div>
 
-</div>
+    </div>
 
+  </section>
 
-<main class="main">
 
-<div class="header">
+  <!-- TAREFAS -->
 
-<div>
-<h1 id="tituloPagina">Dashboard</h1>
-<p>Meu primeiro sistema web completo</p>
-</div>
+  <section id="tarefas" class="pagina">
 
-<div class="clock" id="relogio"></div>
+    <div class="card">
 
-</div>
+      <h2>Nova tarefa</h2>
 
+      <input
+        type="text"
+        id="nomeTarefa"
+        placeholder="Digite uma tarefa"
+      >
 
-<!-- DASHBOARD -->
+      <button class="botao" onclick="adicionarTarefa()">
+        Adicionar
+      </button>
 
-<section id="dashboard" class="page active">
+    </div>
 
-<div class="cards">
+    <div class="card">
 
-<div class="card">
-<small>Tarefas</small>
-<h2 id="cardTarefas">0</h2>
-</div>
+      <h2>Lista de tarefas</h2>
 
-<div class="card">
-<small>Compromissos</small>
-<h2 id="cardAgenda">0</h2>
-</div>
+      <div id="listaTarefas"></div>
 
-<div class="card">
-<small>Clientes</small>
-<h2 id="cardClientes">0</h2>
-</div>
+    </div>
 
-<div class="card">
-<small>Saldo</small>
-<h2 id="cardSaldo">R$ 0,00</h2>
-</div>
+  </section>
 
-</div>
 
-<div class="box">
+  <!-- CLIENTES -->
 
-<h2>🚀 Visão geral</h2>
+  <section id="clientes" class="pagina">
 
-<p>
-Este painel atualiza automaticamente conforme você cadastra informações nas outras áreas.
-</p>
+    <div class="card">
 
-<br>
+      <h2>Novo cliente</h2>
 
-<p>
-Use o menu ao lado para testar o sistema.
-</p>
+      <input
+        type="text"
+        id="nomeCliente"
+        placeholder="Nome"
+      >
 
-</div>
+      <input
+        type="text"
+        id="telefoneCliente"
+        placeholder="Telefone"
+      >
 
-</section>
+      <input
+        type="email"
+        id="emailCliente"
+        placeholder="E-mail"
+      >
 
+      <button class="botao" onclick="adicionarCliente()">
+        Cadastrar
+      </button>
 
-<!-- AGENDA -->
+    </div>
 
-<section id="agenda" class="page">
+    <div class="card">
 
-<div class="box">
+      <h2>Clientes cadastrados</h2>
 
-<h2>Novo compromisso</h2>
+      <table>
 
-<div class="form-grid">
+        <thead>
+          <tr>
+            <th>Nome</th>
+            <th>Telefone</th>
+            <th>E-mail</th>
+            <th>Ação</th>
+          </tr>
+        </thead>
 
-<input id="agendaTitulo" placeholder="Compromisso">
+        <tbody id="tabelaClientes"></tbody>
 
-<input id="agendaData" type="date">
+      </table>
 
-<input id="agendaHora" type="time">
+    </div>
 
-</div>
-
-<br>
-
-<button class="btn" onclick="adicionarAgenda()">
-Adicionar compromisso
-</button>
-
-</div>
-
-
-<div class="box">
-
-<h2>Minha agenda</h2>
-
-<div id="listaAgenda"></div>
-
-</div>
-
-</section>
-
-
-
-<!-- TAREFAS -->
-
-<section id="tarefas" class="page">
-
-<div class="box">
-
-<h2>Nova tarefa</h2>
-
-<div class="form-grid">
-
-<input id="tarefaNome" placeholder="Descrição da tarefa">
-
-<select id="tarefaPrioridade">
-
-<option>Normal</option>
-
-<option>Alta</option>
-
-<option>Urgente</option>
-
-</select>
-
-<button class="btn" onclick="adicionarTarefa()">
-Adicionar
-</button>
-
-</div>
-
-</div>
-
-
-<div class="box">
-
-<h2>Minhas tarefas</h2>
-
-<div id="listaTarefas"></div>
-
-</div>
-
-</section>
-
-
-<!-- FINANCEIRO -->
-
-<section id="financeiro" class="page">
-
-<div class="box">
-
-<h2>Novo lançamento</h2>
-
-<div class="form-grid">
-
-<input id="finDescricao" placeholder="Descrição">
-
-<input id="finValor" type="number" step="0.01" placeholder="Valor">
-
-<select id="finTipo">
-
-<option value="entrada">Entrada</option>
-
-<option value="saida">Saída</option>
-
-</select>
-
-</div>
-
-<br>
-
-<button class="btn" onclick="adicionarFinanceiro()">
-Salvar lançamento
-</button>
-
-</div>
-
-
-<div class="box">
-
-<h2>Movimentações</h2>
-
-<table>
-
-<thead>
-
-<tr>
-
-<th>Descrição</th>
-<th>Tipo</th>
-<th>Valor</th>
-<th>Ação</th>
-
-</tr>
-
-</thead>
-
-<tbody id="tabelaFinanceiro"></tbody>
-
-</table>
-
-</div>
-
-</section>
-
-
-
-<!-- CLIENTES -->
-
-<section id="clientes" class="page">
-
-<div class="box">
-
-<h2>Novo cliente</h2>
-
-<div class="form-grid">
-
-<input id="clienteNome" placeholder="Nome">
-
-<input id="clienteTelefone" placeholder="Telefone">
-
-<input id="clienteEmail" placeholder="E-mail">
-
-</div>
-
-<br>
-
-<button class="btn" onclick="adicionarCliente()">
-Cadastrar cliente
-</button>
-
-</div>
-
-
-<div class="box">
-
-<h2>Clientes</h2>
-
-<input
-class="search"
-id="buscaCliente"
-placeholder="Pesquisar cliente..."
-onkeyup="renderClientes()">
-
-<table>
-
-<thead>
-
-<tr>
-
-<th>Nome</th>
-<th>Telefone</th>
-<th>E-mail</th>
-<th>Ação</th>
-
-</tr>
-
-</thead>
-
-<tbody id="tabelaClientes"></tbody>
-
-</table>
-
-</div>
-
-</section>
-
-
-
-<!-- NOTAS -->
-
-<section id="notas" class="page">
-
-<div class="box">
-
-<h2>Nova anotação</h2>
-
-<textarea
-id="notaTexto"
-placeholder="Digite alguma anotação...">
-</textarea>
-
-<br><br>
-
-<button class="btn" onclick="adicionarNota()">
-Salvar anotação
-</button>
-
-</div>
-
-
-<div class="box">
-
-<h2>Minhas anotações</h2>
-
-<div id="listaNotas"></div>
-
-</div>
-
-</section>
-
+  </section>
 
 </main>
 
 
 <script>
 
-let tarefas =
-JSON.parse(localStorage.getItem("tarefas")) || [];
+  let tarefas = JSON.parse(localStorage.getItem("tarefas")) || [];
 
-let agenda =
-JSON.parse(localStorage.getItem("agenda")) || [];
+  let clientes = JSON.parse(localStorage.getItem("clientes")) || [];
 
-let financeiro =
-JSON.parse(localStorage.getItem("financeiro")) || [];
 
-let clientes =
-JSON.parse(localStorage.getItem("clientes")) || [];
+  function abrirPagina(nome) {
 
-let notas =
-JSON.parse(localStorage.getItem("notas")) || [];
+    const paginas = document.querySelectorAll(".pagina");
 
+    paginas.forEach(function(pagina) {
+      pagina.classList.remove("ativa");
+    });
 
-function salvar(){
+    document
+      .getElementById(nome)
+      .classList.add("ativa");
+  }
 
-localStorage.setItem(
-"tarefas",
-JSON.stringify(tarefas)
-);
 
-localStorage.setItem(
-"agenda",
-JSON.stringify(agenda)
-);
+  function salvarDados() {
 
-localStorage.setItem(
-"financeiro",
-JSON.stringify(financeiro)
-);
+    localStorage.setItem(
+      "tarefas",
+      JSON.stringify(tarefas)
+    );
 
-localStorage.setItem(
-"clientes",
-JSON.stringify(clientes)
-);
+    localStorage.setItem(
+      "clientes",
+      JSON.stringify(clientes)
+    );
 
-localStorage.setItem(
-"notas",
-JSON.stringify(notas)
-);
+    atualizarDashboard();
+  }
 
-atualizarDashboard();
 
-}
+  function adicionarTarefa() {
 
+    const campo =
+      document.getElementById("nomeTarefa");
 
-function abrirPagina(nome,botao){
+    const nome = campo.value.trim();
 
-document
-.querySelectorAll(".page")
-.forEach(p=>p.classList.remove("active"));
+    if (nome === "") {
+      alert("Digite uma tarefa.");
+      return;
+    }
 
-document
-.getElementById(nome)
-.classList.add("active");
+    tarefas.push({
+      id: Date.now(),
+      nome: nome
+    });
 
-document
-.querySelectorAll(".menu button")
-.forEach(b=>b.classList.remove("active"));
+    campo.value = "";
 
-botao.classList.add("active");
+    salvarDados();
 
-let nomes = {
+    mostrarTarefas();
+  }
 
-dashboard:"Dashboard",
-agenda:"Agenda",
-tarefas:"Tarefas",
-financeiro:"Financeiro",
-clientes:"Clientes",
-notas:"Anotações"
 
-};
+  function excluirTarefa(id) {
 
-document.getElementById("tituloPagina").innerText =
-nomes[nome];
+    tarefas = tarefas.filter(function(tarefa) {
+      return tarefa.id !== id;
+    });
 
-}
+    salvarDados();
 
+    mostrarTarefas();
+  }
 
 
-/* AGENDA */
+  function mostrarTarefas() {
 
-function adicionarAgenda(){
+    const lista =
+      document.getElementById("listaTarefas");
 
-let titulo =
-document.getElementById("agendaTitulo").value;
+    lista.innerHTML = "";
 
-let data =
-document.getElementById("agendaData").value;
+    tarefas.forEach(function(tarefa) {
 
-let hora =
-document.getElementById("agendaHora").value;
+      const div =
+        document.createElement("div");
 
-if(!titulo || !data){
+      div.className = "card";
 
-alert("Preencha o compromisso e a data.");
+      div.innerHTML =
+        "<strong>" +
+        tarefa.nome +
+        "</strong>" +
+        "<br><br>" +
+        '<button class="botao excluir" onclick="excluirTarefa(' +
+        tarefa.id +
+        ')">Excluir</button>';
 
-return;
+      lista.appendChild(div);
+    });
+  }
 
-}
 
-agenda.push({
+  function adicionarCliente() {
 
-id:Date.now(),
+    const nome =
+      document.getElementById("nomeCliente").value.trim();
 
-titulo,
+    const telefone =
+      document.getElementById("telefoneCliente").value.trim();
 
-data,
+    const email =
+      document.getElementById("emailCliente").value.trim();
 
-hora
+    if (nome === "") {
+      alert("Digite o nome do cliente.");
+      return;
+    }
 
-});
+    clientes.push({
+      id: Date.now(),
+      nome: nome,
+      telefone: telefone,
+      email: email
+    });
 
-salvar();
+    document.getElementById("nomeCliente").value = "";
+    document.getElementById("telefoneCliente").value = "";
+    document.getElementById("emailCliente").value = "";
 
-renderAgenda();
+    salvarDados();
 
-document.getElementById("agendaTitulo").value="";
+    mostrarClientes();
+  }
 
-}
 
+  function excluirCliente(id) {
 
-function excluirAgenda(id){
+    clientes = clientes.filter(function(cliente) {
+      return cliente.id !== id;
+    });
 
-agenda =
-agenda.filter(a=>a.id!==id);
+    salvarDados();
 
-salvar();
+    mostrarClientes();
+  }
 
-renderAgenda();
 
-}
+  function mostrarClientes() {
 
+    const tabela =
+      document.getElementById("tabelaClientes");
 
-function renderAgenda(){
+    tabela.innerHTML = "";
 
-let area =
-document.getElementById("listaAgenda");
+    clientes.forEach(function(cliente) {
 
-if(agenda.length===0){
+      const linha =
+        document.createElement("tr");
 
-area.innerHTML =
-'<div class="empty">Nenhum compromisso cadastrado.</div>';
+      linha.innerHTML =
+        "<td>" + cliente.nome + "</td>" +
+        "<td>" + cliente.telefone + "</td>" +
+        "<td>" + cliente.email + "</td>" +
+        '<td><button class="botao excluir" onclick="excluirCliente(' +
+        cliente.id +
+        ')">Excluir</button></td>';
 
-return;
+      tabela.appendChild(linha);
+    });
+  }
 
-}
 
-area.innerHTML="";
+  function atualizarDashboard() {
 
-agenda.forEach(a=>{
+    document.getElementById("totalTarefas").innerText =
+      tarefas.length;
 
-area.innerHTML += `
+    document.getElementById("totalClientes").innerText =
+      clientes.length;
+  }
 
-<div class="box">
 
-<strong>📅 ${a.titulo}</strong>
+  mostrarTarefas();
 
-<br><br>
+  mostrarClientes();
 
-${a.data}
-
-${a.hora ? " às "+a.hora : ""}
-
-<br><br>
-
-<button
-class="btn btn-danger"
-onclick="excluirAgenda(${a.id})">
-
-Excluir
-
-</button>
-
-</div>
-
-`;
-
-});
-
-}
-
-
-
-/* TAREFAS */
-
-function adicionarTarefa(){
-
-let nome =
-document.getElementById("tarefaNome").value;
-
-let prioridade =
-document.getElementById("tarefaPrioridade").value;
-
-if(!nome){
-
-alert("Digite a tarefa.");
-
-return;
-
-}
-
-tarefas.push({
-
-id:Date.now(),
-
-nome,
-
-prioridade,
-
-concluida:false
-
-});
-
-document.getElementById("tarefaNome").value="";
-
-salvar();
-
-renderTarefas();
-
-}
-
-
-function concluirTarefa(id){
-
-let tarefa =
-tarefas.find(t=>t.id===id);
-
-tarefa.concluida =
-!tarefa.concluida;
-
-salvar();
-
-renderTarefas();
-
-}
-
-
-function excluirTarefa(id){
-
-tarefas =
-tarefas.filter(t=>t.id!==id);
-
-salvar();
-
-renderTarefas();
-
-}
-
-
-function renderTarefas(){
-
-let area =
-document.getElementById("listaTarefas");
-
-if(tarefas.length===0){
-
-area.innerHTML =
-'<div class="empty">Nenhuma tarefa.</div>';
-
-return;
-
-}
-
-area.innerHTML="";
-
-tarefas.forEach(t=>{
-
-area.innerHTML += `
-
-<div class="box">
-
-<strong>
-
-${t.concluida ? "✅" : "⬜"}
-
-${t.nome}
-
-</strong>
-
-<br>
-
-Prioridade:
-${t.prioridade}
-
-<br><br>
-
-<button
-class="btn btn-green"
-onclick="concluirTarefa(${t.id})">
-
-${t.concluida ? "Reabrir" : "Concluir"}
-
-</button>
-
-<button
-class="btn btn-danger"
-onclick="excluirTarefa(${t.id})">
-
-Excluir
-
-</button>
-
-</div>
-
-`;
-
-});
-
-}
-
-
-
-/* FINANCEIRO */
-
-function adicionarFinanceiro(){
-
-let descricao =
-document.getElementById("finDescricao").value;
-
-let valor =
-Number(document.getElementById("finValor").value);
-
-let tipo =
-document.getElementById("finTipo").value;
-
-if(!descricao || !valor){
-
-alert("Preencha os dados.");
-
-return;
-
-}
-
-financeiro.push({
-
-id:Date.now(),
-
-descricao,
-
-valor,
-
-tipo
-
-});
-
-salvar();
-
-renderFinanceiro();
-
-}
-
-
-function excluirFinanceiro(id){
-
-financeiro =
-financeiro.filter(f=>f.id!==id);
-
-salvar();
-
-renderFinanceiro();
-
-}
-
-
-function renderFinanceiro(){
-
-let tabela =
-document.getElementById("tabelaFinanceiro");
-
-tabela.innerHTML="";
-
-financeiro.forEach(f=>{
-
-tabela.innerHTML += `
-
-<tr>
-
-<td>${f.descricao}</td>
-
-<td>
-
-${f.tipo==="entrada"
-?"🟢 Entrada"
-:"🔴 Saída"}
-
-</td>
-
-<td>
-
-R$ ${f.valor.toFixed(2)}
-
-</td>
-
-<td>
-
-<button
-class="btn btn-danger"
-onclick="excluirFinanceiro(${f.id})">
-
-Excluir
-
-</button>
-
-</td>
-
-</tr>
-
-`;
-
-});
-
-}
-
-
-
-/* CLIENTES */
-
-function adicionarCliente(){
-
-let nome =
-document.getElementById("clienteNome").value;
-
-let telefone =
-document.getElementById("clienteTelefone").value;
-
-let email =
-document.getElementById("clienteEmail").value;
-
-if(!nome){
-
-alert("Informe o nome.");
-
-return;
-
-}
-
-clientes.push({
-
-id:Date.now(),
-
-nome,
-
-telefone,
-
-email
-
-});
-
-salvar();
-
-renderClientes();
-
-}
-
-
-function excluirCliente(id){
-
-clientes =
-clientes.filter(c=>c.id!==id);
-
-salvar();
-
-renderClientes();
-
-}
-
-
-function renderClientes(){
-
-let busca =
-document
-.getElementById("buscaCliente")
-.value
-.toLowerCase();
-
-let tabela =
-document.getElementById("tabelaClientes");
-
-tabela.innerHTML="";
-
-clientes
-
-.filter(c=>
-c.nome.toLowerCase().includes(busca)
-)
-
-.forEach(c=>{
-
-tabela.innerHTML += `
-
-<tr>
-
-<td>${c.nome}</td>
-
-<td>${c.telefone}</td>
-
-<td>${c.email}</td>
-
-<td>
-
-<button
-class="btn btn-danger"
-onclick="excluirCliente(${c.id})">
-
-Excluir
-
-</button>
-
-</td>
-
-</tr>
-
-`;
-
-});
-
-}
-
-
-
-/* NOTAS */
-
-function adicionarNota(){
-
-let texto =
-document.getElementById("notaTexto").value;
-
-if(!texto)return;
-
-notas.unshift({
-
-id:Date.now(),
-
-texto,
-
-data:new Date().toLocaleString()
-
-});
-
-document.getElementById("notaTexto").value="";
-
-salvar();
-
-renderNotas();
-
-}
-
-
-function excluirNota(id){
-
-notas =
-notas.filter(n=>n.id!==id);
-
-salvar();
-
-renderNotas();
-
-}
-
-
-function renderNotas(){
-
-let area =
-document.getElementById("listaNotas");
-
-area.innerHTML="";
-
-notas.forEach(n=>{
-
-area.innerHTML += `
-
-<div class="note">
-
-${n.texto}
-
-<br><br>
-
-<small>${n.data}</small>
-
-<br><br>
-
-<button
-class="btn btn-danger"
-onclick="excluirNota(${n.id})">
-
-Excluir
-
-</button>
-
-</div>
-
-`;
-
-});
-
-}
-
-
-
-/* DASHBOARD */
-
-function atualizarDashboard(){
-
-document.getElementById("cardTarefas")
-.innerText =
-tarefas.length;
-
-document.getElementById("cardAgenda")
-.innerText =
-agenda.length;
-
-document.getElementById("cardClientes")
-.innerText =
-clientes.length;
-
-let saldo = 0;
-
-financeiro.forEach(f=>{
-
-if(f.tipo==="entrada")
-saldo += f.valor;
-
-else
-saldo -= f.valor;
-
-});
-
-document.getElementById("cardSaldo")
-.innerText =
-saldo.toLocaleString(
-"pt-BR",
-{
-style:"currency",
-currency:"BRL"
-}
-);
-
-}
-
-
-/* RELÓGIO */
-
-function atualizarRelogio(){
-
-document.getElementById("relogio")
-.innerText =
-new Date().toLocaleString("pt-BR");
-
-}
-
-setInterval(
-atualizarRelogio,
-1000
-);
-
-atualizarRelogio();
-
-
-/* INICIALIZAÇÃO */
-
-renderAgenda();
-
-renderTarefas();
-
-renderFinanceiro();
-
-renderClientes();
-
-renderNotas();
-
-atualizarDashboard();
+  atualizarDashboard();
 
 </script>
 
